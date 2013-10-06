@@ -67,3 +67,6 @@ hifn/hifn.ko
 safe/safe.ko
 padlock/padlock.ko
 ubsec/ubsec.ko
+
+# Audio
+sound/driver/uaudio/snd_uaudio.ko
