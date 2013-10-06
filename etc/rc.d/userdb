@@ -60,7 +60,7 @@ echo "Generating user database(s)."
 	-o "nogroup:*:65533:" -n \
 	-o "nobody:*:65534:" -n \
 	-o "ftp:*:50:" -n \
-	-o "mdp:*:500:mdp" -n \
+	-o "mpd:*:500:mpd" -n \
 	-m "//system/usermanagement/group" \
 		-v "concat(name,':*:',id,':')" -n \
 	-b \
@@ -100,7 +100,7 @@ hast:*:845:845::0:0:HAST unprivileged user:/var/empty:/usr/sbin/nologin
 nobody:*:65534:65534::0:0:Unprivileged user:/nonexistent:/usr/sbin/nologin
 ftp:*:21:50::0:0:FTP user:/mnt:/sbin/nologin
 uucp:*:66:66::0:0:UUCP pseudo-user:/var/empty:/usr/sbin/nologin
-mdp:*:500:500::0:0:Music Player Daemon User:/var/mpd:/usr/sbin/nologin" > ${userdb_masterpasswd}
+mpd:*:500:500::0:0:Music Player Daemon User:/var/mpd:/usr/sbin/nologin" > ${userdb_masterpasswd}
 
 # Generate the /etc/passwd, pwd.db and spwd.db files
 /usr/sbin/pwd_mkdb -p ${userdb_masterpasswd} > /dev/null 2>&1
