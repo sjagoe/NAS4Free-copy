@@ -262,7 +262,7 @@ post-patch:
 		${WRKSRC}/doc/mpdconf.example
 # Fix man pages for executable names
 	@${REINPLACE_CMD} -e 's/^\(\.B m\)pd/\1usicpd/' \
-		-e 's#^\(\.BI \)/etc/mpd.conf#\1${PREFIX}/etc/${PORTNAME}.conf#' \
+		-e 's#^\(\.BI \)/etc/mpd.conf#\1${NAS4FREE_ROOTFS}${PREFIX}/etc/${PORTNAME}.conf#' \
 		-e 's#^mpd.conf#${PORTNAME}.conf#' \
 		-e 's#^mpd(1)#musicpd(1)#' \
 		${WRKSRC}/doc/mpd.1 ${WRKSRC}/doc/mpd.conf.5
@@ -274,22 +274,14 @@ post-patch:
 .endif
 
 do-install:
-	@${INSTALL_PROGRAM} ${WRKSRC}/src/mpd ${PREFIX}/bin/${PORTNAME}
-	@${INSTALL_MAN} ${WRKSRC}/doc/mpd.1 ${MAN1PREFIX}/man/man1/${PORTNAME}.1
-	@${INSTALL_MAN} ${WRKSRC}/doc/mpd.conf.5 \
-		${MAN5PREFIX}/man/man5/${PORTNAME}.conf.5
-.if ${PORT_OPTIONS:MDOCS}
-	@${MKDIR} ${DOCSDIR}
-.   for doc in ${PORTDOCS}
-	@${INSTALL_DATA} ${WRKSRC}/${doc} ${DOCSDIR}/
-.   endfor
-.endif
+	@${INSTALL_PROGRAM} ${WRKSRC}/src/mpd ${NAS4FREE_ROOTFS}${PREFIX}/bin/${PORTNAME}
 
 post-install:
-	@${INSTALL_DATA} ${WRKSRC}/doc/mpdconf.example ${PREFIX}/etc/${PORTNAME}.conf.sample
-	@if [ ! -f ${PREFIX}/etc/${PORTNAME}.conf ]; then \
-		${CP} -p ${PREFIX}/etc/${PORTNAME}.conf.sample \
-			${PREFIX}/etc/${PORTNAME}.conf ; \
+	@${INSTALL_DATA} ${WRKSRC}/doc/mpdconf.example \
+		${NAS4FREE_ROOTFS}${PREFIX}/etc/${PORTNAME}.conf.sample
+	@if [ ! -f ${NAS4FREE_ROOTFS}${PREFIX}/etc/${PORTNAME}.conf ]; then \
+		${CP} -p ${NAS4FREE_ROOTFS}${PREFIX}/etc/${PORTNAME}.conf.sample \
+			${NAS4FREE_ROOTFS}${PREFIX}/etc/${PORTNAME}.conf ; \
 	fi
 	@${INSTALL} -d -o ${MPDUSER} -g ${MPDGROUP} ${MPDDIR} ${MPDDIR}/.mpd
 	@${ECHO_MSG}
